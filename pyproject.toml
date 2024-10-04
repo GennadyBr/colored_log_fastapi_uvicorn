@@ -65,7 +65,7 @@ exclude = [
 ]
 max-line-length = 79
 max-complexity = 8
-ignore = "A003"
+ignore = "A003, E402"
 
 [tool.black]
 line-length = 79

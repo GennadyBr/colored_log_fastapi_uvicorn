@@ -1,4 +1,6 @@
 """ FastAPI Boilerplate Library """
+import os
+import sys
 from typing import Callable
 
 import requests
@@ -6,6 +8,9 @@ import uvicorn
 from fastapi import FastAPI, Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
+
+# Add the root directory of your project to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.core.logger import logger
 
