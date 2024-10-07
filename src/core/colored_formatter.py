@@ -26,16 +26,23 @@ class ColoredFormatter(logging.Formatter):
         return super().format(record)
 
 
+colored_format = (
+    '%(asctime)s - %(colorlevel)s - %(name)s '
+    '- %(module)s:(%(funcName)s):%(lineno)d - %(message)s'
+)
+colored_formatter = ColoredFormatter(fmt=colored_format)
+
+
 def replace_formatter(logger: logging.Logger) -> None:
     """Replace root_formatter with colored_formatter"""
-    colored_format = (
-        '%(asctime)s - %(colorlevel)s - %(name)s '
-        '- %(module)s:(%(funcName)s):%(lineno)d - %(message)s'
-    )
-    colored_formatter = ColoredFormatter(fmt=colored_format)
+    for handler in logger.handlers:
+        # no need color in log file
+        if not isinstance(handler, RotatingFileHandler):
+            handler.setFormatter(colored_formatter)
+
+
+def replace_formatter_4_all_loggers() -> None:
+    """Replace root_formatter with colored_formatter"""
     for logger in logging.root.manager.loggerDict.values():
         if isinstance(logger, logging.Logger):
-            for handler in logger.handlers:
-                # no need color in log file
-                if not isinstance(handler, RotatingFileHandler):
-                    handler.setFormatter(colored_formatter)
+            replace_formatter(logger)

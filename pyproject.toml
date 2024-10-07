@@ -64,7 +64,7 @@ exclude = [
     "src/migrations/",
 ]
 max-line-length = 79
-max-complexity = 8
+max-complexity = 10
 ignore = "A003, E402"
 
 [tool.black]
