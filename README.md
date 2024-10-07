@@ -1,4 +1,4 @@
-# Logging boilerplate
+# Colored logging boilerplate FastAPI & Uvicorn
 
 Make nice colored logs in FastAPI and Uvicorn
 ![colored logs.png](src%2Fcore%2Fcolored%20logs.png)
