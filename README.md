@@ -5,23 +5,32 @@ Make nice colored logs in FastAPI and Uvicorn
 
 ## Installation && Run
 ### Git clone
-```git clone https://github.com/GennadyBr/colored_log_fastapi_uvicorn_python_boilerplate.git```
+```
+git clone https://github.com/GennadyBr/colored_log_fastapi_uvicorn_python_boilerplate.git
+```
 
 ### Run app
-```cd src && python main.py```
+```
+cd src && python main.py
+```
 
 ### Run tests
-```cd ../tests && pytest test```
+```
+cd ../tests && pytest test
+```
 
 ### Logs you can find in console and logs file
 
 ### Logs file
-```cd ../src/logs/logs.log```
+```
+cd ../src/logs/logs.log
+```
 
-## FastAPI logging boilerplate
+## Features
+### FastAPI logging boilerplate
 - set colored formatter inside Middleware
 - config in log_conf.yaml
 
-## Uvicorn
+### Uvicorn
 - customized formatter
 - config in log_conf.yaml
