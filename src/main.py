@@ -1,87 +1,30 @@
 """ FastAPI Boilerplate Library """
 import os
 import sys
-from typing import Callable
 
-import requests
 import uvicorn
-from fastapi import FastAPI, Request
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import Response
+from fastapi import FastAPI
 
 # Add the root directory of your project to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.core.logger import logger
-
-
-class LoggingMiddleware(BaseHTTPMiddleware):
-    """Logging middleware"""
-
-    async def dispatch(
-        self, request: Request, call_next: Callable,
-    ) -> Response:
-        logger.info('Logging middleware')
-        logger.info(f'Request: {request.method} {request.url}')
-        response = await call_next(request)
-        logger.info(f'Response: {response.status_code}')
-        return response
-
+from src.middleware import LoggingMiddleware
+from src.api.routers import router
 
 app = FastAPI(
     debug=False,
 )
 app.add_middleware(LoggingMiddleware)
 
-
-def _hello() -> dict:
-    """Hello world"""
-    logger.info('Hello World')
-    return {'message': 'Hello World'}
-
-
-def _request() -> str:
-    """Request example"""
-    response = requests.get('https://google.com')
-    result = f'Google Response: {response.status_code}'
-    logger.info(result)
-    return result
-
-
-def _raise_error() -> str:
-    """Raise Error"""
-    try:
-        div_zero = 1 / 0
-    except ZeroDivisionError as error:
-        logger.error(error)
-        logger.exception('RRRR - Divide by zero error')
-        return str(error)
-    return str(div_zero)
-
-
-@app.get('/hello')
-async def hello() -> dict:
-    """Hello world"""
-    return _hello()
-
-
-@app.get('/request')
-async def request() -> str:
-    """Request example"""
-    return _request()
-
-
-@app.get('/raise_error')
-async def raise_error() -> str:
-    """Raise Error"""
-    return _raise_error()
-
+app.include_router(router)
 
 if __name__ == '__main__':
-
-    _hello()
-    _request()
-    _raise_error()
+    logger.info('Information')
+    logger.debug('Debug')
+    logger.warning('Warning')
+    logger.error('Error')
+    logger.critical('Critical')
 
     uvicorn.run(
         app='main:app',
